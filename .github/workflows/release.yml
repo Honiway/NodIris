@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ninja-build dpkg-dev
 
       - name: Configure
-        run: cmake --preset linux-release -DOGT_BUILD_TOOLS=OFF -DNODIRIS_PORTABLE_LINUX_PACKAGE=ON
+        run: cmake --preset linux-release --fresh -DOGT_BUILD_TOOLS=OFF -DNODIRIS_PORTABLE_LINUX_PACKAGE=ON
 
       - name: Build and test
         run: |
@@ -56,7 +56,7 @@ jobs:
         run: choco install nsis --no-progress -y
 
       - name: Configure
-        run: cmake --preset windows-release -DOGT_BUILD_TOOLS=OFF
+        run: cmake --preset windows-release --fresh -DOGT_BUILD_TOOLS=OFF
 
       - name: Build and test
         run: |

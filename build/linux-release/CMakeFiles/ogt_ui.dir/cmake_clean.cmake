@@ -1,0 +1,40 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/ogt_ui_autogen.dir/AutogenUsed.txt"
+  "CMakeFiles/ogt_ui_autogen.dir/ParseCache.txt"
+  "ogt_ui_autogen"
+  "CMakeFiles/ogt_ui.dir/ogt_ui_autogen/mocs_compilation.cpp.o"
+  "CMakeFiles/ogt_ui.dir/ogt_ui_autogen/mocs_compilation.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/AppearanceDialog.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/AppearanceDialog.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/Commands.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/Commands.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/DocumentPage.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/DocumentPage.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/GraphScene.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/GraphScene.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/GraphView.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/GraphView.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/Icons.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/Icons.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/Inspector.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/Inspector.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/LinkItem.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/LinkItem.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/MainWindow.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/MainWindow.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/NeuronItem.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/NeuronItem.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/PreviewPopup.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/PreviewPopup.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/StartPage.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/StartPage.cpp.o.d"
+  "CMakeFiles/ogt_ui.dir/src/ui/Theme.cpp.o"
+  "CMakeFiles/ogt_ui.dir/src/ui/Theme.cpp.o.d"
+  "libogt_ui.a"
+  "libogt_ui.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/ogt_ui.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

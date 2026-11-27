@@ -1,0 +1,4 @@
+/tmp/nodiris-install-check-20261127/bin/NodIris
+/tmp/nodiris-install-check-20261127/share/nodiris/Logo.png
+/tmp/nodiris-install-check-20261127/share/doc/NodIris/LICENSE
+/tmp/nodiris-install-check-20261127/share/doc/NodIris/Papicons-LICENSE.txt

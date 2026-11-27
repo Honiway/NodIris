@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/papicons">
+        <file alias="archive.svg">papicons/archive.svg</file>
+        <file alias="arrow-left.svg">papicons/arrow-left.svg</file>
+        <file alias="arrow-right.svg">papicons/arrow-right.svg</file>
+        <file alias="bookmark.svg">papicons/bookmark.svg</file>
+        <file alias="chevron-left.svg">papicons/chevron-left.svg</file>
+        <file alias="color-theme.svg">papicons/color-theme.svg</file>
+        <file alias="external-link.svg">papicons/external-link.svg</file>
+        <file alias="folder.svg">papicons/folder.svg</file>
+        <file alias="gallery.svg">papicons/gallery.svg</file>
+        <file alias="globe.svg">papicons/globe.svg</file>
+        <file alias="grid.svg">papicons/grid.svg</file>
+        <file alias="heart.svg">papicons/heart.svg</file>
+        <file alias="home.svg">papicons/home.svg</file>
+        <file alias="link.svg">papicons/link.svg</file>
+        <file alias="list.svg">papicons/list.svg</file>
+        <file alias="menu.svg">papicons/menu.svg</file>
+        <file alias="newspaper.svg">papicons/newspaper.svg</file>
+        <file alias="paper.svg">papicons/paper.svg</file>
+        <file alias="plus.svg">papicons/plus.svg</file>
+        <file alias="search.svg">papicons/search.svg</file>
+        <file alias="sparkles.svg">papicons/sparkles.svg</file>
+        <file alias="star.svg">papicons/star.svg</file>
+        <file alias="tasks.svg">papicons/tasks.svg</file>
+        <file alias="user.svg">papicons/user.svg</file>
+    </qresource>
+</RCC>

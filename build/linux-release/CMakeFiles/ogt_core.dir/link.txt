@@ -1,0 +1,2 @@
+/usr/bin/ar qc libogt_core.a CMakeFiles/ogt_core.dir/ogt_core_autogen/mocs_compilation.cpp.o CMakeFiles/ogt_core.dir/src/core/Graph.cpp.o CMakeFiles/ogt_core.dir/src/core/NeuronKind.cpp.o CMakeFiles/ogt_core.dir/src/core/ProjectFile.cpp.o CMakeFiles/ogt_core.dir/src/core/Thumbnail.cpp.o CMakeFiles/ogt_core.dir/src/core/Layout.cpp.o
+/usr/bin/ranlib libogt_core.a

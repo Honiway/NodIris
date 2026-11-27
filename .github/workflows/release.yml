@@ -1,0 +1,90 @@
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.8.*"
+          cache: true
+
+      - name: Install packaging tools
+        run: sudo apt-get update && sudo apt-get install -y ninja-build dpkg-dev
+
+      - name: Configure
+        run: cmake --preset linux-release -DOGT_BUILD_TOOLS=OFF -DNODIRIS_PORTABLE_LINUX_PACKAGE=ON
+
+      - name: Build and test
+        run: |
+          cmake --build --preset linux-release --parallel
+          ctest --preset linux-release
+        env:
+          QT_QPA_PLATFORM: offscreen
+
+      - name: Build Debian package
+        working-directory: build/linux-release
+        run: cpack --config CPackConfig.cmake -G DEB
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NodIris-Linux-amd64
+          path: build/linux-release/*.deb
+
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.8.*"
+          cache: true
+
+      - name: Install NSIS
+        run: choco install nsis --no-progress -y
+
+      - name: Configure
+        run: cmake --preset windows-release -DOGT_BUILD_TOOLS=OFF
+
+      - name: Build and test
+        run: |
+          cmake --build --preset windows-release --parallel
+          ctest --preset windows-release
+        env:
+          QT_QPA_PLATFORM: offscreen
+
+      - name: Build Windows installer
+        working-directory: build/windows-release
+        run: cpack --config CPackConfig.cmake -C Release -G NSIS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NodIris-Windows-x64
+          path: build/windows-release/*.exe
+
+  github-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [linux, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: artifacts/*

@@ -100,7 +100,7 @@ QIcon MakeNeuronIcon(NeuronIcon icon, const QColor& color)
 
 QIcon MakeAppIcon()
 {
-    return QIcon(":/Logo.png");
+    return QIcon(":/packaging/icons/nodiris.png");
 }
 
 } // namespace Ogt

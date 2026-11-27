@@ -21,6 +21,7 @@ qt_standard_project_setup()
 
 option(OGT_BUILD_TESTS "Build the core tests" ON)
 option(OGT_BUILD_TOOLS "Build the snapshot tool" ON)
+option(NODIRIS_PORTABLE_LINUX_PACKAGE "Bundle Qt under /opt/NodIris in the Debian package" OFF)
 
 # The core knows nothing about widgets, so the tests run without a display.
 add_library(ogt_core STATIC
@@ -55,8 +56,11 @@ target_link_libraries(ogt_ui PUBLIC ogt_core Qt6::Widgets)
 qt_add_executable(nodiris WIN32 MACOSX_BUNDLE src/main.cpp)
 qt_add_resources(nodiris "app_assets"
     PREFIX "/"
-    FILES Logo.png
+    FILES packaging/icons/nodiris.png
 )
+if(WIN32)
+    target_sources(nodiris PRIVATE packaging/windows/nodiris.rc)
+endif()
 target_link_libraries(nodiris PRIVATE ogt_ui)
 target_compile_definitions(nodiris PRIVATE OGT_VERSION="${PROJECT_VERSION}")
 set_target_properties(nodiris PROPERTIES
@@ -105,12 +109,76 @@ install(TARGETS nodiris BUNDLE DESTINATION . RUNTIME DESTINATION ${CMAKE_INSTALL
 install(FILES Logo.png
     DESTINATION ${CMAKE_INSTALL_DATADIR}/nodiris
 )
+if(UNIX AND NOT APPLE)
+    if(NODIRIS_PORTABLE_LINUX_PACKAGE)
+        set(nodiris_desktop_executable "/opt/NodIris/bin/NodIris")
+        set(nodiris_integration_prefix "/usr/share")
+    else()
+        set(nodiris_desktop_executable "NodIris")
+        set(nodiris_integration_prefix "${CMAKE_INSTALL_DATADIR}")
+    endif()
+    configure_file(
+        packaging/linux/io.github.honiway.NodIris.desktop.in
+        ${CMAKE_CURRENT_BINARY_DIR}/io.github.honiway.NodIris.desktop
+        @ONLY
+    )
+    install(FILES packaging/icons/nodiris.png
+        DESTINATION ${nodiris_integration_prefix}/icons/hicolor/512x512/apps
+    )
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/io.github.honiway.NodIris.desktop
+        DESTINATION ${nodiris_integration_prefix}/applications
+    )
+    install(FILES packaging/linux/io.github.honiway.NodIris.metainfo.xml
+        DESTINATION ${nodiris_integration_prefix}/metainfo
+    )
+    install(FILES packaging/linux/io.github.honiway.NodIris.xml
+        DESTINATION ${nodiris_integration_prefix}/mime/packages
+    )
+endif()
 install(FILES LICENSE licenses/Papicons-LICENSE.txt
     DESTINATION ${CMAKE_INSTALL_DOCDIR}
 )
-qt_generate_deploy_app_script(
-    TARGET nodiris
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-)
-install(SCRIPT ${deploy_script})
+if(WIN32 OR APPLE OR NODIRIS_PORTABLE_LINUX_PACKAGE)
+    qt_generate_deploy_app_script(
+        TARGET nodiris
+        OUTPUT_SCRIPT deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+    )
+    install(SCRIPT ${deploy_script})
+endif()
+
+set(CPACK_PACKAGE_NAME "NodIris")
+set(CPACK_PACKAGE_VENDOR "Honiway")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A lightweight, local mind-mapping application")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/Honiway/NodIris")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "NodIris")
+set(CPACK_PACKAGE_EXECUTABLES "NodIris" "NodIris")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_PACKAGE_FILE_NAME "NodIris-${PROJECT_VERSION}-win64-setup")
+    set(CPACK_NSIS_DISPLAY_NAME "NodIris")
+    set(CPACK_NSIS_PACKAGE_NAME "NodIris")
+    set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/windows/nodiris.ico")
+    set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/windows/nodiris.ico")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\NodIris.exe")
+    set(CPACK_NSIS_URL_INFO_ABOUT "https://github.com/Honiway/NodIris")
+    set(CPACK_NSIS_CONTACT "Honiway")
+    set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
+    set(CPACK_CREATE_DESKTOP_LINKS "NodIris")
+elseif(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "DEB")
+    set(CPACK_PACKAGE_FILE_NAME "nodiris-${PROJECT_VERSION}-linux-amd64")
+    set(CPACK_DEBIAN_PACKAGE_NAME "nodiris")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Honiway")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "graphics")
+    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+    set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/Honiway/NodIris")
+    if(NODIRIS_PORTABLE_LINUX_PACKAGE)
+        set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/NodIris")
+    endif()
+endif()
+
+include(CPack)

@@ -147,6 +147,29 @@ ctest --preset release
 ./build/release/NodIris
 ```
 
+## Create a release
+
+Update the version in the `project()` line of `CMakeLists.txt`, then push a tag
+such as `v0.2.0`. The release workflow builds and publishes a Windows x64 NSIS
+installer and an amd64 Debian package for Ubuntu/Debian. It can also be run
+manually from the Actions tab to download both packages without creating a
+GitHub release.
+
+To create a Linux package locally against Qt installed by your distribution,
+run:
+
+```sh
+cmake --preset linux-release -DOGT_BUILD_TOOLS=OFF
+cmake --build --preset linux-release --parallel
+cpack --config build/linux-release/CPackConfig.cmake -G DEB
+```
+
+On Windows, use a Developer PowerShell with NSIS installed:
+
+```powershell
+cpack --config build/windows-release/CPackConfig.cmake -C Release -G NSIS
+```
+
 ## Code structure
 
 `src/core` contains the graph model, project format, image compression and grid

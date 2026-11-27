@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NodIris
+Comment=Create and organize mind maps
+Comment[fr]=Créer et organiser des cartes mentales
+Exec=@nodiris_desktop_executable@ %F
+Icon=nodiris
+Terminal=false
+Categories=Office;Graphics;
+MimeType=application/x-nodiris;
+StartupWMClass=NodIris
